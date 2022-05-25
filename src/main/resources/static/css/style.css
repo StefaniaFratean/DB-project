@@ -1,0 +1,68 @@
+body {
+    background-image: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+table.headerTable {
+    width: 100%;
+}
+
+table#infoBox {
+    background-color: #ffbb00;
+    opacity: 0.7;
+    border-radius: 25px;
+    margin: 5px;
+}
+
+table.menuTable {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    background-color: #ffbb00;
+    opacity: 0.7;
+    border-radius: 25px;
+}
+p.infoBoxP {
+    color: #500025;
+    margin: 5px;
+    font-size: 20px;
+    /*@font-face {font-family: "Bauhaus 93 V2";}*/
+}
+p.menuListP {
+    color: #500025;
+    margin: 12px;
+    font-size: 21px;
+    /*@font-face {font-family: "Bauhaus 93 V2";}*/
+}
+
+td#avatarImg {
+    text-align: center;
+    vertical-align: center;
+}
+
+td.menuList {
+    text-align: center;
+    vertical-align: center;
+    width: 16.66%
+}
+
+td#picked {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ffe700;
+    opacity: 1;
+    border-radius: 25px;
+}
+
+
+a.link {
+    text-decoration: none;
+
+}
+a:hover{
+    font-weight:bold
+}
+
+
