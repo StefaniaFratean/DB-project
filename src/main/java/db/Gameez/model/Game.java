@@ -17,8 +17,11 @@ public class Game implements Serializable {
     private double price;
     @Column (nullable = false)
     private  String requirements;
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
     private int size;
-    private String filePath;
+    private String file;
 
     public Game() {
     }
@@ -71,12 +74,20 @@ public class Game implements Serializable {
         this.size = size;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getFile() {
+        return file;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public void setFile(String filePath) {
+        this.file = filePath;
     }
 
     @Override
@@ -88,7 +99,7 @@ public class Game implements Serializable {
                 ", price=" + price +
                 ", requirements='" + requirements + '\'' +
                 ", size=" + size +
-                ", filePath='" + filePath + '\'' +
+                ", filePath='" + file + '\'' +
                 '}';
     }
 }
