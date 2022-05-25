@@ -5,11 +5,12 @@ import java.io.Serializable;
 
 
 @Entity
+@Table(name = "producer")
 public class Producer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long producerId;
 
     @Column(nullable = false)
     private String name;
@@ -19,12 +20,12 @@ public class Producer implements Serializable {
     public Producer() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getProducerId() {
+        return producerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProducerId(Long id) {
+        this.producerId = id;
     }
 
     public String getName() {
@@ -46,7 +47,7 @@ public class Producer implements Serializable {
     @Override
     public String toString() {
         return "Producer{" +
-                "id=" + id +
+                "id=" + producerId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

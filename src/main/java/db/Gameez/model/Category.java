@@ -5,11 +5,12 @@ import java.io.Serializable;
 
 
 @Entity
+@Table(name = "categories")
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long categoryId;
     @Column (nullable = false)
     private String name;
     private String description;
@@ -17,12 +18,12 @@ public class Category implements Serializable {
     public Category() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCategoryId(Long id) {
+        this.categoryId = id;
     }
 
     public String getName() {
@@ -44,7 +45,7 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + id +
+                "id=" + categoryId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

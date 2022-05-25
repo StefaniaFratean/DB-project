@@ -17,7 +17,7 @@ public class UserResource {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") // asta e un npoint. ADRESA UNDE RULEAZA:PORT/URL
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.findAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -46,6 +46,8 @@ public class UserResource {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK); // created means we created smth on the server
     }
+
+
 
 
 

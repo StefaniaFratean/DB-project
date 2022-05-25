@@ -5,22 +5,23 @@ import java.io.Serializable;
 
 
 @Entity
+@Table(name = "transactions")
 public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long transactionsId;
     @Column(nullable = false)
     private double value;
     //private Date date;
     private String type;
 
-    public Long getId() {
-        return id;
+    public Long getTransactionsId() {
+        return transactionsId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTransactionsId(Long id) {
+        this.transactionsId = id;
     }
 
     public double getValue() {

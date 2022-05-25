@@ -6,39 +6,41 @@ import java.io.Serializable;
 
 @Entity
 public class Wishlist implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long userId;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
-    private Long gameId;
+    private Long id;
+
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Game game;
 
     public Wishlist() {
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getGameId() {
-        return gameId;
+    public User getUser() {
+        return user;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Wishlist{" +
-                "userId=" + userId +
-                ", gameId=" + gameId +
-                '}';
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

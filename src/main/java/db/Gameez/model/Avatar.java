@@ -5,23 +5,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "avatar")
 public class Avatar implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private Long avatarId;
     @Column(nullable = false)
     private String photoPath;
 
     public Avatar() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getAvatarId() {
+        return avatarId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAvatarId(Long id) {
+        this.avatarId = id;
     }
 
     public String getPhotoPath() {
@@ -35,7 +36,7 @@ public class Avatar implements Serializable {
     @Override
     public String toString() {
         return "Avatar{" +
-                "id=" + id +
+                "id=" + avatarId +
                 ", photoPath='" + photoPath + '\'' +
                 '}';
     }
