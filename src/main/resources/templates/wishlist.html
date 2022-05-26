@@ -76,9 +76,9 @@
     </tr>
     </thead>
     <tr th:each="game : ${wishlist}">
-        <td  class="menuList"><span th:text="${game.name}"> name </span></td>
-        <td  class="menuList"><span th:text="${game.description}"> description </span></td>
-        <td  class="menuList"><span th:text="${game.producer.name}"> producer </span></td>
+        <td  class="gamesList"><span th:text="${game.name}"> name </span></td>
+        <td  class="gamesList"><span th:text="${game.description}"> description </span></td>
+        <td  class="gamesList"><span th:text="${game.producer.name}"> producer </span></td>
 
     </tr>
 </table>

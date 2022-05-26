@@ -8,25 +8,16 @@
 <body>
     <table class="startPage">
         <tr>
-            <td class="elem"><img src="img/logo.png" alt="Logo"></td>
+            <td class="elem" colspan="2"><img src="img/logo.png" alt="Logo"></td>
+
         </tr>
-        <table>
-            <tr>
-                <td>
-
-                </td>
-                <td>
-
-                </td>
-            </tr>
-        </table>
 
         <tr>
             <td class="elem">
                 <form class="user" th:action="@{/login}" method="post">
                     <div class="form-group">
                         <input name="username" class="form-control form-control-user"
-                               th:placeholder="Email" required="true" type="text"/>
+                               th:placeholder="Username" required="true" type="text"/>
                     </div>
                     <div class="form-group">
                         <input name="password" th:placeholder="Password" type="password"
@@ -34,6 +25,24 @@
                     </div>
                     <button type="submit" name="submit" class="btn btn-primary btn-user btn-block"
                             th:text="Login"></button>
+                </form>
+            </td>
+            <td class="elem">
+                <form class="user" th:action="@{/register}" method="post">
+                    <div class="form-group">
+                        <input name="email" th:placeholder="Email" type="email"
+                               required="true" class="form-control form-control-user"/>
+                    </div>
+                    <div class="form-group">
+                        <input name="username" class="form-control form-control-user"
+                               th:placeholder="Username" required="true" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input name="password" th:placeholder="Password" type="password"
+                               required="true" class="form-control form-control-user"/>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-primary btn-user btn-block"
+                            th:text="Register"></button>
                 </form>
             </td>
         </tr>

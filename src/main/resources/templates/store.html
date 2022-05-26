@@ -69,6 +69,28 @@
 <table>
 
 </table>
+
+<table class="menuTable">
+    <thead>
+    <tr>
+        <th> Name </th>
+        <th> Description </th>
+        <th> Producer </th>
+        <th> Add to wishlist </th>
+    </tr>
+    </thead>
+    <tr th:each="game : ${store}">
+        <td  class="gamesList"><span th:text="${game.name}"> name </span></td>
+        <td  class="gamesList"><span th:text="${game.description}"> description </span></td>
+        <td  class="gamesList"><span th:text="${game.producer.name}"> producer </span></td>
+       <!-- <td  class="gamesList"><button class="addbtn">Add</button></td> -->
+        <td><form method="post" th:action="${game.gameId}">
+            <input type="submit" value="Add"></input>
+        </form></td>
+
+
+    </tr>
+</table>
 <p> STORE </p>
 
 

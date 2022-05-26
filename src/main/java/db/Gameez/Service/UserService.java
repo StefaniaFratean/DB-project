@@ -4,6 +4,7 @@ import db.Gameez.exception.UserNotFoundException;
 import db.Gameez.model.Game;
 import db.Gameez.model.User;
 import db.Gameez.model.Wishlist;
+import db.Gameez.repo.GameRepo;
 import db.Gameez.repo.UserRepo;
 import db.Gameez.repo.WishlistRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepo userRepo;
     private final WishlistRepo wishlistRepo;
+    private final GameRepo gameRepo;
 
     @Autowired
-    public UserService(UserRepo userRepo, WishlistRepo wishlistRepo) {
+    public UserService(UserRepo userRepo, WishlistRepo wishlistRepo, GameRepo gameRepo) {
         this.userRepo = userRepo;
         this.wishlistRepo = wishlistRepo;
+        this.gameRepo = gameRepo;
     }
 
     public User addUser(User user){
@@ -54,5 +57,20 @@ public class UserService {
         final List<Wishlist> allByUser = wishlistRepo.findAllByUser(user);
 
         return allByUser.stream().map(Wishlist::getGame).collect(Collectors.toList());
+    }
+
+    public List<Game> getGames() {
+        final List<Game> allGames = gameRepo.findAll();
+
+        return allGames.stream().collect(Collectors.toList());
+    }
+
+    public Wishlist addWishlist(Wishlist wishlist){
+        //user.setEmail(UUID.randomUUID().toString());
+        return wishlistRepo.save(wishlist);
+    }
+
+
+    public void addNewUser(User user) {
     }
 }

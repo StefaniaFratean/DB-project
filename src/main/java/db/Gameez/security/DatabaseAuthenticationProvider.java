@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
-    @Autowired
+    @Autowired // nu mai trebe scris constructorul. dar trebuie notate cu service, repo
     private UserService userService;
 
     @Override

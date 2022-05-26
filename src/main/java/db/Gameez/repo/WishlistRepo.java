@@ -9,4 +9,7 @@ import java.util.List;
 public interface WishlistRepo extends JpaRepository<Wishlist, Long> {
 
     List<Wishlist> findAllByUser(User user);
+
+
+
 }
