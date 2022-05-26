@@ -1,5 +1,6 @@
 package db.Gameez.Service;
 
+import db.Gameez.exception.GameNotFoundException;
 import db.Gameez.model.Game;
 import db.Gameez.model.User;
 import db.Gameez.model.Wishlist;
@@ -25,6 +26,9 @@ public class GameService {
         return gameRepo.findAll();
     }
 
+    public Game findById(long id){
+        return gameRepo.findById(id).orElseThrow(() -> new GameNotFoundException("Game not found!"));
+    }
 
 
 

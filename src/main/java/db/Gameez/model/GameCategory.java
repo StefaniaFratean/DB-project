@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Table(name = "games_has_categories")
 public class GameCategory implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
 

@@ -83,10 +83,13 @@
         <td  class="gamesList"><span th:text="${game.name}"> name </span></td>
         <td  class="gamesList"><span th:text="${game.description}"> description </span></td>
         <td  class="gamesList"><span th:text="${game.producer.name}"> producer </span></td>
-       <!-- <td  class="gamesList"><button class="addbtn">Add</button></td> -->
-        <td><form method="post" th:action="${game.gameId}">
-            <input type="submit" value="Add"></input>
-        </form></td>
+
+        <td>
+            <form th:id="'form-'+${game.gameId}" method="POST" th:action="@{/addWish}">
+                <input th:id="'id-'+${game.gameId}" type="hidden" name="gameId" th:value="${game.gameId}">
+                <input th:id="'submit-'+${game.gameId}" type="submit" value="Add">
+            </form>
+        </td>
 
 
     </tr>
