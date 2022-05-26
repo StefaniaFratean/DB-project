@@ -18,7 +18,7 @@
                         <img src="img/userAvatar.png" alt="Avatar" width="50px">
                     </td>
                     <td>
-                        <a  class="link" href="/settings"><p class="infoBoxP">Username</p></a>
+                        <a  class="link" href="/settings"><p class="infoBoxP"><span th:text="${user.username}"></span></p></a>
                     </td>
                 </tr>
                 <tr>
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td class="infoBoxTd">
-                        <p class="infoBoxP">Wallet : 0.00</p>
+                        <p class="infoBoxP">Wallet : <span th:text="${user.wallet}"></span></p>
                     </td>
                 </tr>
                 <tr>

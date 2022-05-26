@@ -2,9 +2,11 @@ package db.Gameez.Service;
 
 import db.Gameez.exception.UserNotFoundException;
 import db.Gameez.model.Game;
+import db.Gameez.model.Purchases;
 import db.Gameez.model.User;
 import db.Gameez.model.Wishlist;
 import db.Gameez.repo.GameRepo;
+import db.Gameez.repo.PurchasesRepo;
 import db.Gameez.repo.UserRepo;
 import db.Gameez.repo.WishlistRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,28 @@ public class UserService {
     private final UserRepo userRepo;
     private final WishlistRepo wishlistRepo;
     private final GameRepo gameRepo;
+    private final PurchasesRepo purchasesRepo;
 
     @Autowired
-    public UserService(UserRepo userRepo, WishlistRepo wishlistRepo, GameRepo gameRepo) {
+    public UserService(UserRepo userRepo, WishlistRepo wishlistRepo, GameRepo gameRepo, PurchasesRepo purchasesRepo) {
         this.userRepo = userRepo;
         this.wishlistRepo = wishlistRepo;
         this.gameRepo = gameRepo;
+        this.purchasesRepo = purchasesRepo;
     }
 
     public User addUser(User user){
         //user.setEmail(UUID.randomUUID().toString());
-        return userRepo.save(user);
+        Optional<User> userByEmail= userRepo.findUserByUsername(user.getUsername());
+        if(userByEmail.isPresent()){
+            try {
+                throw new IllegalAccessException("email taken");
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        } else{
+            return userRepo.save(user);
+        }
     }
 
     public List<User> findAllUsers(){
@@ -73,4 +86,11 @@ public class UserService {
 
     public void addNewUser(User user) {
     }
+
+    public List<Game> getPurchases(User user) {
+        final List<Purchases> allByUser = purchasesRepo.findAllByUser(user);
+
+        return allByUser.stream().map(Purchases::getGame).collect(Collectors.toList());
+    }
+
 }

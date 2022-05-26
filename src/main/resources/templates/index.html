@@ -18,7 +18,7 @@
                             <img src="img/userAvatar.png" alt="Avatar" width="50px">
                         </td>
                         <td>
-                            <a  class="link" href="settings"><p class="infoBoxP">Username</p></a>
+                            <a  class="link" href="settings"><p class="infoBoxP"><span th:text="${user.username}"></span></p></a>
 
                         </td>
                     </tr>
@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td class="infoBoxTd">
-                            <p class="infoBoxP">Wallet : 0.00</p>
+                            <p class="infoBoxP">Wallet : <span th:text="${user.wallet}"></span></p>
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                 <a  class="link" href="/wishlist"><p class="menuListP"> Wishlist </p></a>
             </td>
             <td class="menuList">
-                <a  class="link" href="/wallet"><p class="menuListP"> Wallet </p></a>
+                <a  class="link" href="/wallet"><p class="menuListP"> Wallet : </p></a>
             </td>
             <td class="menuList">
                 <a  class="link" href="/settings"><p class="menuListP"> Settings </p></a>
@@ -67,8 +67,27 @@
 
     </table>
 
-    <table>
 
+    <table class="menuTable">
+        <thead>
+        <tr>
+            <th> Name </th>
+            <th> Description </th>
+            <th> Producer </th>
+            <th> Download </th>
+        </tr>
+        </thead>
+        <tr th:each="game : ${purchases}">
+            <td  class="gamesList"><span th:text="${game.name}"> name </span></td>
+            <td  class="gamesList"><span th:text="${game.description}"> description </span></td>
+            <td  class="gamesList"><span th:text="${game.producer.name}"> producer </span></td>
+            <td>
+                <button type="submit" name="submit"
+                        th:text="Download"></button>
+            </td>
+
+
+        </tr>
     </table>
     <p> HOME </p>
 

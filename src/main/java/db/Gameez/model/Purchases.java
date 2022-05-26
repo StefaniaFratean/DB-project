@@ -10,45 +10,37 @@ public class Purchases implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long purchasesId;
-    @Column(nullable = false)
-    private Long userId;
-    @Column(nullable = false)
-    private Long gameId;
+    private Long purchases_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     public Purchases() {
     }
 
-    public Long getPurchasesId() {
-        return purchasesId;
+    public Long getId() {
+        return purchases_id;
     }
 
-    public void setPurchasesId(Long id) {
-        this.purchasesId = id;
+    public void setId(Long id) {
+        this.purchases_id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getGameId() {
-        return gameId;
+    public Game getGame() {
+        return game;
     }
-
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
-    }
-
-    @Override
-    public String toString() {
-        return "Purchases{" +
-                "id=" + purchasesId +
-                ", userId=" + userId +
-                ", gameId=" + gameId +
-                '}';
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

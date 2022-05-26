@@ -73,12 +73,26 @@
         <th> Name </th>
         <th> Description </th>
         <th> Producer </th>
+        <th> Buy </th>
+        <th> Remove </th>
     </tr>
     </thead>
     <tr th:each="game : ${wishlist}">
         <td  class="gamesList"><span th:text="${game.name}"> name </span></td>
         <td  class="gamesList"><span th:text="${game.description}"> description </span></td>
         <td  class="gamesList"><span th:text="${game.producer.name}"> producer </span></td>
+        <td>
+            <form th:id="'form-'+${game.gameId}" method="POST" th:action="@{/buy}">
+                <input th:id="'id-'+${game.gameId}" type="hidden" name="gameId" th:value="${game.gameId}">
+                <input th:id="'submit-'+${game.gameId}" type="submit" value="Buy">
+            </form>
+        </td>
+        <td>
+            <form th:id="'form-'+${game.gameId}" method="post" th:action="@{/remove}">
+                <input th:id="'id-'+${game.gameId}" type="hidden" name="gameId" th:value="${game.gameId}">
+                <input th:id="'submit-'+${game.gameId}" type="submit" value="Remove">
+            </form>
+        </td>
 
     </tr>
 </table>

@@ -4,8 +4,10 @@ import db.Gameez.Service.GameService;
 import db.Gameez.Service.UserService;
 import db.Gameez.exception.UserNotFoundException;
 import db.Gameez.model.Game;
+import db.Gameez.model.Purchases;
 import db.Gameez.model.User;
 import db.Gameez.model.Wishlist;
+import db.Gameez.repo.PurchasesRepo;
 import db.Gameez.repo.WishlistRepo;
 import db.Gameez.security.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class NavigationController {
 
     @Autowired
     private WishlistRepo wishlistRepo;
+    @Autowired
+    private PurchasesRepo purchasesRepo;
     @GetMapping("/login")
     public String showLoginPage(final Principal principal) {
         if (principal != null)
@@ -39,27 +43,43 @@ public class NavigationController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String showRegisterPage(final Principal principal) {
-        if (principal != null)
-            return "redirect:/";
+    @PostMapping(value = "/register-user", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String register(Model model, HttpServletRequest request) {
+        final Map<String, String[]> parameterMap = request.getParameterMap();
+        final String email = parameterMap.get("email")[0];
+        final String username = parameterMap.get("username")[0];
+        final String password = parameterMap.get("password")[0];
 
-        return "register";
+        User user = new User();
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password);
+        userService.addUser(user);
+        return "login";
     }
 
 
     @GetMapping("/settings")
-    public String showSettings() {
+    public String showSettings(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        model.addAttribute("user", user);
         return "settings";
     }
 
     @GetMapping("/about")
-    public String showAbout() {
+    public String showAbout(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        model.addAttribute("user", user);
         return "about";
     }
 
     @GetMapping("/wallet")
-    public String showWallet() {
+    public String showWallet(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        model.addAttribute("user", user);
         return "wallet";
     }
 
@@ -82,8 +102,21 @@ public class NavigationController {
         return "wishlist";
     }
 
+//    @GetMapping("/purchases")
+//    public String showPurchases(Model model) {
+//        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+//        model.addAttribute("user", user);
+//        model.addAttribute("purchases", userService.getPurchases(user));
+//        return "purchases";
+//    }
+
     @GetMapping("/index")
-    public String showIndex() {
+    public String showIndex(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        model.addAttribute("user", user);
+        model.addAttribute("purchases", userService.getPurchases(user));
         return "index";
     }
 
@@ -112,6 +145,59 @@ public class NavigationController {
         model.addAttribute("wishlist", userService.getWishlist(user));
         return "wishlist";
     }
+
+
+    @PostMapping(value = "/buy", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String buy(Model model, HttpServletRequest request) {
+        final Map<String, String[]> parameterMap = request.getParameterMap();
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        final long gameId = Long.parseLong(parameterMap.get("gameId")[0]);
+        final Game game = gameService.findById(gameId);
+        Purchases newBuy = new Purchases();
+        newBuy.setUser(user);
+        newBuy.setGame(game);
+      //  wishlistRepo.deleteWishlistByGameAndUser(game, user);
+        user.setWallet(user.getWallet()-game.getPrice());
+        userService.updateUser(user);
+        purchasesRepo.saveAndFlush(newBuy);
+
+
+        model.addAttribute("user", user);
+        model.addAttribute("purchases", userService.getPurchases(user));
+        return "index";
+    }
+
+    @PostMapping(value = "/remove", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String remove(Model model, HttpServletRequest request) {
+        final Map<String, String[]> parameterMap = request.getParameterMap();
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        final long gameId = Long.parseLong(parameterMap.get("gameId")[0]);
+        final Game game = gameService.findById(gameId);
+        wishlistRepo.deleteByGameAndUser(game, user);
+
+
+        model.addAttribute("user", user);
+        model.addAttribute("wishlist", userService.getWishlist(user));
+        return "wishlist";
+    }
+
+    @PostMapping(value = "/addMoney", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String addMoney(Model model, HttpServletRequest request) {
+        final Map<String, String[]> parameterMap = request.getParameterMap();
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = userService.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UserNotFoundException("not found"));
+        final long userWallet = Long.parseLong(parameterMap.get("wallet")[0]);
+        user.setWallet(user.getWallet()+userWallet);
+        userService.updateUser(user);
+
+        model.addAttribute("user", user);
+        model.addAttribute("purchases", userService.getPurchases(user));
+        return "wallet";
+    }
+
+
 
 
 }
